@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9BLOG</title>
+  </head>
+  <body>
+    <a href="/create-post">Create a new post</a>
+    <% console.log(posts) %> <% if(locals.posts){ posts.forEach(p => { %>
+    <h1><%=p.title %></h1>
+    <p><%=p.date %></p>
+    <p><%=p.author %></p>
+    <p><%=p.content %></p>
+    <% }); } %>
+  </body>
+</html>
