@@ -1,0 +1,19 @@
+<%-include("header.ejs")%>
+
+  <body>
+    <a href="/">Home</a>
+    <form method="GET" action="/post/edit/<%= post.id %>">
+        <input type="submit" value="Edit">
+      </form>
+    <form method="POST" action="/delete-post/<%=  post.id %>?_method=DELETE">
+        <input type="submit" value="Delete">
+      </form>
+   
+    <% if(locals.post){ %>
+    <h1><%=post.title %></a></h1>
+    <p><%=post.date %></p>
+    <p><%=post.author %></p>
+    <p><%=post.content %></p>
+    <% } %>
+  </body>
+</html>

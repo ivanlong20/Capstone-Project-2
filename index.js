@@ -2,16 +2,19 @@ import express from "express";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import * as fs from "node:fs";
+import methodOverride from "method-override";
 const app = express();
 const port = 3000;
-var postID = 0;
+var postID = parseInt(fs.readFileSync("./id.json", "utf8")) || 0;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
-function Post(title, author, content, password) {
+function Post(id, title, author, content, password) {
+  this.id = id;
   this.title = title;
   this.author = author;
   this.content = content;
@@ -19,53 +22,86 @@ function Post(title, author, content, password) {
   this.date = new Date();
 }
 
-function createPost(title, author, content, password) {
-  console.log(postID);
-  const postFilePath = __dirname + "/posts/" + postID + ".json";
-  var post = new Post(title, author, content, password);
-  fs.writeFileSync(postFilePath, JSON.stringify(post), "utf8");
-
-  console.log(postFilePath);
-}
-
 function getPosts() {
   var posts = [];
-  for (let i = 0; i < postID; i++) {
-    const postFilePath = __dirname + "/posts/" + i + ".json";
+  console.log(postID);
+  fs.readdirSync(__dirname + "/posts").forEach((file) => {
+    const postFilePath = __dirname + "/posts/" + file;
     posts.push(JSON.parse(fs.readFileSync(postFilePath, "utf8")));
-  }
+  });
+
   return posts;
 }
 
-function editPost(id, title, author, content, password) {
-  const postFilePath = __dirname + "/posts/" + id + ".json";
-  var post = new Post(title, author, content, password);
-  fs.writeFileSync(postFilePath, JSON.stringify(post), "utf8");
-}
-
+//Get Home Page
 app.get("/", (req, res) => {
   res.render("home.ejs", { posts: getPosts() });
 });
 
+//Get Create Post Page
 app.get("/create-post", (req, res) => {
   res.render("create-post.ejs");
 });
 
+//Create Post
 app.post("/create-post", (req, res) => {
-  createPost(
+  const postFilePath = __dirname + "/posts/" + postID + ".json";
+  const idPath = __dirname + "/id.json";
+  var post = new Post(
+    postID,
     req.body.title,
     req.body.author,
     req.body.content,
     req.body.password
   );
-  postID++;
+  fs.writeFileSync(postFilePath, JSON.stringify(post), "utf8");
+  ++postID;
+  fs.writeFileSync(idPath, postID.toString(), "utf8");
   res.render("create-post.ejs");
 });
 
-app.get("/edit-post/:id", (req, res) => {
+//Edit Post
+app.post("/edit-post/:id", (req, res) => {
   const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
-  const post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
-  res.render("edit-post.ejs", { post: post });
+  let post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
+  var updatedPost = {
+    id: post.id,
+    title: req.body.title || post.title,
+    author: req.body.author || post.author,
+    content: req.body.content || post.content,
+    password: req.body.password || post.password,
+    date: new Date(),
+  };
+  fs.writeFileSync(postFilePath, JSON.stringify(updatedPost), "utf8");
+
+  res.redirect("/post/" + req.params.id);
+});
+
+//View Post by ID
+app.get("/post/:id", (req, res) => {
+  const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
+  let post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
+  console.log(post);
+  res.render("post-view.ejs", { post: post });
+});
+
+//Edit Post by ID
+app.get("/post/edit/:id", (req, res) => {
+  const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
+  let post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
+  console.log(post);
+  res.render("edit-view.ejs", { post: post });
+});
+
+app.delete("/delete-post/:id", (req, res) => {
+  const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
+  fs.unlinkSync(postFilePath, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+  });
+  res.redirect("/");
 });
 
 app.listen(port, () => {
