@@ -1,10 +1,10 @@
 <%-include("header.ejs")%>
 
 <div class="d-flex justify-content-end mt-3 mb-3 me-5 gap-3 ">
-  <form method="GET" action="/post/edit/<%= post.id %>">
+  <form method="GET" action="/post/edit-access/<%= post.id %>">
     <input type="submit" value="Edit" class="btn btn-light">
   </form>
-<form method="POST" action="/delete-post/<%=  post.id %>?_method=DELETE">
+<form method="GET" action="/delete-post-access/<%=  post.id %>">
     <input type="submit" value="Delete" class="btn btn-light">
   </form>
 </div>

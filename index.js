@@ -59,6 +59,16 @@ app.post("/create-post", (req, res) => {
   res.render("create-post.ejs");
 });
 
+//Authentication page for editing post
+app.get("/post/edit-access/:id", (req, res) => {
+  res.render("access-code-edit.ejs", { id: req.params.id });
+});
+
+//Authentication page for deleting post
+app.get("/delete-post-access/:id", (req, res) => {
+  res.render("access-code-delete.ejs", { id: req.params.id });
+});
+
 //Edit Post
 app.post("/edit-post/:id", (req, res) => {
   const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
@@ -88,8 +98,12 @@ app.get("/post/:id", (req, res) => {
 app.get("/post/edit/:id", (req, res) => {
   const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
   let post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
+  if (req.query.password === post.password) {
+    res.render("edit-view.ejs", { post: post });
+  } else {
+    res.redirect("/post/edit-access/" + req.params.id);
+  }
   console.log(post);
-  res.render("edit-view.ejs", { post: post });
 });
 
 //About Page
@@ -99,13 +113,37 @@ app.get("/about", (req, res) => {
 
 app.delete("/delete-post/:id", (req, res) => {
   const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
-  fs.unlinkSync(postFilePath, (err) => {
-    if (err) {
-      console.error(err);
-      return;
+  let post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
+  if (req.body.password === post.password) {
+    fs.unlinkSync(postFilePath, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+    res.redirect("/");
+  } else {
+    res.redirect("/delete-post-access/" + req.params.id);
+  }
+});
+
+//Search Post
+app.get("/search", (req, res) => {
+  var posts = [];
+  fs.readdirSync(__dirname + "/posts").forEach((file) => {
+    const postFilePath = __dirname + "/posts/" + file;
+    var post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
+    var search = req.query.search;
+    console.log(post.title);
+    if (
+      post.title.includes(search) ||
+      post.author.includes(search) ||
+      post.content.includes(search)
+    ) {
+      posts.push(post);
     }
   });
-  res.redirect("/");
+  res.render("home.ejs", { posts: posts });
 });
 
 app.listen(port, () => {
