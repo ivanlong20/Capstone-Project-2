@@ -10,7 +10,7 @@ var postID = parseInt(fs.readFileSync("./id.json", "utf8")) || 0;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
 function Post(id, title, author, content, password) {
@@ -24,7 +24,6 @@ function Post(id, title, author, content, password) {
 
 function getPosts() {
   var posts = [];
-  console.log(postID);
   fs.readdirSync(__dirname + "/posts").forEach((file) => {
     const postFilePath = __dirname + "/posts/" + file;
     posts.push(JSON.parse(fs.readFileSync(postFilePath, "utf8")));
@@ -91,6 +90,11 @@ app.get("/post/edit/:id", (req, res) => {
   let post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
   console.log(post);
   res.render("edit-view.ejs", { post: post });
+});
+
+//About Page
+app.get("/about", (req, res) => {
+  res.render("about.ejs");
 });
 
 app.delete("/delete-post/:id", (req, res) => {
