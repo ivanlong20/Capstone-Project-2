@@ -4,6 +4,19 @@
         font-style: normal;
 }
 
+body{
+        font-family: "Lato", sans-serif !important;
+        font-weight:400!important;
+        font-style:normal!important;
+}
+.nav-button{
+        background-color: none !important;
+        color: white !important;
+}
+.nav-button:hover{
+        background-color: rgb(253, 253, 253) !important;
+        color: black !important;
+}
 .post-content{
         overflow: hidden;
         display: -webkit-box;

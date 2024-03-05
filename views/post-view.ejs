@@ -1,11 +1,12 @@
 <%-include("header.ejs")%>
 
-<div class="d-flex justify-content-end mt-3 mb-3 me-5 gap-3 ">
+<div class="d-flex justify-content-end my-5 mb-3 me-5 gap-3 ">
   <form method="GET" action="/post/edit-access/<%= post.id %>">
-    <input type="submit" value="Edit" class="btn btn-light">
+    <input type="submit" value="Edit" class="btn btn-secondary">
   </form>
 <form method="GET" action="/delete-post-access/<%=  post.id %>">
-    <input type="submit" value="Delete" class="btn btn-light">
+    <input type="submit" value="Delete" class="btn btn-danger">
+    
   </form>
 </div>
    
@@ -13,10 +14,10 @@
 
     <% if(locals.post){ %>
       <div class="container text-light" style="width:60vw">
-        <h1><%=post.title %></a></h1>
-        <p><%=formatedDate %></p>
-        <p><%=post.author %></p>
-        <p ><%=post.content %></p>
+        <h1 class="fw-5"><%=post.title %></a></h1>
+        <p class="fw-1"><%=formatedDate %></p>
+        <p class="fw-1"><%=post.author %></p>
+        <p style="width:50vw;line-height: 150%;"><%=post.content %></p>
       </div>
 
     <% } %>
