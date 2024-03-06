@@ -1,44 +1,48 @@
 <%-include("header.ejs")%>
 
-<div class="container mt-2">
+<div class="d-flex flex-wrap flex-column container mt-4 gap-3">
   <h1 class="text-white mb-3">Edit Post</h1>
-  <form action="/edit-post/<%=post.id%>" method="POST">
-    <label for="title" class="text-white pb-2">Title</label><br />
+  <form
+    action="/edit-post/<%=post.id%>"
+    method="POST"
+    class="d-flex container flex-column flex-wrap gap-2"
+  >
+    <label for="title" class="text-white">Title</label>
     <input
       type="text"
       name="title"
       placeholder="Title"
-      style="width: 80em; padding: 0.5rem"
+      style="width: 70vw; padding: 0.5rem"
       class="bg-darker rounded-3 text-light"
       value="<%=post.title %>"
-    /><br />
-    <label for="author" class="text-white py-2">Author</label><br />
+    />
+    <label for="author" class="text-white">Author</label>
     <input
       type="text"
       name="author"
       placeholder="Author"
-      style="width: 30em; padding: 0.5rem"
+      style="width: 15em; padding: 0.5rem"
       class="bg-darker rounded-3 text-light"
       value="<%=post.author %>"
-    /><br />
-    <label for="password" class="text-white py-2">Access Code</label><br />
+    />
+    <label for="password" class="text-white">Access Code</label>
     <input
       type="text"
       name="password"
       placeholder="Access Code"
-      style="width: 10em; padding: 0.5rem"
+      style="width: 8em; padding: 0.5rem"
       class="bg-darker rounded-3 text-light"
       value="<%=post.password %>"
-    /><br />
-    <label for="content" class="text-white py-2">Content</label><br />
+    />
+    <label for="content" class="text-white">Content</label>
     <textarea
       name="content"
-      style="width: 80em; height: 25em"
+      style="width: 70vw; height: 25em"
       class="bg-darker rounded-3 text-light p-3"
     >
 <%=post.content %></textarea
     ><br />
-    <button type="submit" class="mt-3 btn btn-light">Submit</button>
+    <button type="submit" class="mb-5 btn btn-light">Submit</button>
   </form>
 </div>
 <%-include("footer.ejs")%>
