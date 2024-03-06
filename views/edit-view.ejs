@@ -15,6 +15,7 @@
       style="width: 70vw; padding: 0.5rem"
       class="bg-darker rounded-3 text-light"
       value="<%=post.title %>"
+      required
     />
     <label for="author" class="text-white">Author</label>
     <input
@@ -24,6 +25,7 @@
       style="width: 15em; padding: 0.5rem"
       class="bg-darker rounded-3 text-light"
       value="<%=post.author %>"
+      required
     />
     <label for="password" class="text-white">Access Code</label>
     <input
@@ -33,12 +35,14 @@
       style="width: 8em; padding: 0.5rem"
       class="bg-darker rounded-3 text-light"
       value="<%=post.password %>"
+      required
     />
     <label for="content" class="text-white">Content</label>
     <textarea
       name="content"
       style="width: 70vw; height: 25em"
       class="bg-darker rounded-3 text-light p-3"
+      required
     >
 <%=post.content %></textarea
     ><br />
