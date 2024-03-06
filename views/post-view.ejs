@@ -14,7 +14,7 @@
       </a>
   </div>
 
-  <% var formatedDate = new Date(post.date).toLocaleString("en-US",{year: "numeric", month:"long", day:"numeric", hour:"numeric", minute:"numeric"}); %>
+  <% var formatedDate = new Date(post.date).toLocaleString("en-HK",{year: "numeric", month:"long", day:"numeric", hour:"numeric", minute:"numeric"}); %>
 
   <% if(locals.post){ %>
     <div class="container text-light" style="width:60vw">
@@ -33,7 +33,7 @@
       <% post.comments.forEach(function(comment){ %>
         <div class="d-flex flex-wrap justify-content-between align-items-center bg-dark rounded-3 p-3 mb-3">
           <p class="text-light fs-5"><%=comment.comment %></p>
-          <div style="font-size:12px;font-weight:300;color:white" class="align-self-end"><%= new Date(comment.timestamp).toLocaleString("en-US",{year: "numeric", month:"numeric", day:"numeric", hour:"numeric", minute:"numeric"}) %></div>
+          <div style="font-size:12px;font-weight:300;color:white" class="align-self-end"><%= new Date(comment.timestamp).toLocaleString("en-HK",{year: "numeric", month:"numeric", day:"numeric", hour:"numeric", minute:"numeric"}) %></div>
         </div>
         <% })} else{%>
           <p class="text-light fs-5 fw-2 mb-4">No comments yet</p>
