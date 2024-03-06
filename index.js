@@ -20,6 +20,7 @@ function Post(id, title, author, content, password) {
   this.content = content;
   this.password = password;
   this.date = new Date();
+  this.comments = [];
 }
 
 function getPosts() {
@@ -80,6 +81,7 @@ app.post("/edit-post/:id", (req, res) => {
     content: req.body.content || post.content,
     password: req.body.password || post.password,
     date: new Date(),
+    comments: post.comments,
   };
   fs.writeFileSync(postFilePath, JSON.stringify(updatedPost), "utf8");
 
@@ -144,6 +146,18 @@ app.get("/search", (req, res) => {
     }
   });
   res.render("home.ejs", { posts: posts });
+});
+
+app.post("/post/:id/comment", (req, res) => {
+  const postFilePath = __dirname + "/posts/" + req.params.id + ".json";
+  let post = JSON.parse(fs.readFileSync(postFilePath, "utf8"));
+  post.comments.push({
+    comment: req.body.comment,
+    timestamp: new Date(),
+  });
+  console.log(req.body.comment);
+  fs.writeFileSync(postFilePath, JSON.stringify(post), "utf8");
+  res.redirect("/post/" + req.params.id);
 });
 
 app.listen(port, () => {
