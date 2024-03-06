@@ -1,0 +1,25 @@
+<a href="javascript:" id="return-to-top"><i class="fa-solid fa-chevron-up" style="color: #0e1116;"></i></a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    // ===== Scroll to Top ==== 
+$(window).scroll(function() {
+    if ($(this).scrollTop() >= 20) {        // If page is scrolled more than 50px
+        $('#return-to-top').fadeIn(200);    // Fade in the arrow
+    } else {
+        $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+    }
+});
+$('#return-to-top').click(function() {      // When arrow is clicked
+    $('body,html').animate({
+        scrollTop : 0                       // Scroll to top of body
+    }, 100);
+});
+    </script>
+<footer class="text-light bg-dark">
+    <div class="container  py-5 bg-dark">
+        © 2024 Ivan Chan
+    </div>
+</footer>
+</body>
+</html>
