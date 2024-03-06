@@ -1,18 +1,17 @@
 <%-include("header.ejs")%>
-<i class="icon-arrow-down"></i>
 
-<div class="d-flex flex-wrap gap-5 my-5 justify-content-center">
-
+<div class="">
+  <div class="d-flex flex-wrap gap-5 my-5 py-5 justify-content-center mx-5">
     <% if(locals.posts){ posts.forEach(p => { %>
       <% var formatedDate = new Date(p.date).toLocaleString("en-US",{year: "numeric", month:"long", day:"numeric"}); %>
 
-        <div class="col-5 bg-darker text-light rounded-4 p-4">  
+        <div class="d-flex flex-column bg-darker text-light rounded-4 p-4 w-100" style="max-width:50em">  
         <p class="fw-bold fs-5"><%=p.title %></p>
         <div class="d-flex justify-content-between">
           <p class="fw-light "><%=formatedDate %></p>
         </div>
        
-        <p class="post-content"><%=p.content %></p>
+        <p class="post-content me-auto"><%=p.content %></p>
         <div class="d-flex flex-wrap justify-content-between pt-1">        
           <p class="fw-semibold align-middle"><%=p.author %></p>
           <a href="/post/<%= p.id %>" class="btn btn-outline-light justify-content-end" type="button">See More</a>
@@ -20,6 +19,8 @@
       </div>
     </a>
     <% }); } %>
+  </div>
+   
 
   </div>
 
