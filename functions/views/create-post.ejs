@@ -1,0 +1,50 @@
+<%-include("header.ejs")%>
+
+<div class="d-flex flex-wrap flex-column container mt-4 gap-3">
+  <p class="fs-1 fw-medium text-white">Publish Blog</p>
+
+  <form
+    action="/create-post"
+    method="POST"
+    class="d-flex container flex-column flex-wrap gap-2"
+  >
+    <label for="title" class="text-white">Title</label>
+    <input
+      type="text"
+      name="title"
+      placeholder="Title"
+      style="width: 70vw; padding: 0.5rem"
+      class="bg-darker rounded-3 text-light"
+      required
+    />
+    <label for="author" class="text-white">Author</label>
+    <input
+      type="text"
+      name="author"
+      placeholder="Author"
+      style="width: 15em; padding: 0.5rem"
+      class="bg-darker rounded-3 text-light"
+      required
+    />
+    <label for="password" class="text-white">Access Code</label>
+    <input
+      type="text"
+      name="password"
+      placeholder="Access Code"
+      style="width: 8em; padding: 0.5rem"
+      class="bg-darker rounded-3 text-light"
+      required
+    />
+    <label for="content" class="text-white">Content</label>
+    <textarea
+      name="content"
+      style="width: 70vw; height: 25em"
+      class="bg-darker rounded-3 text-light p-3"
+      required
+    ></textarea
+    ><br />
+    <button type="submit" class="mb-5 btn btn-light">Submit</button>
+  </form>
+</div>
+
+<%-include("footer.ejs")%>
