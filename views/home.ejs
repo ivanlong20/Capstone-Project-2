@@ -5,7 +5,7 @@
     <% if(locals.posts){ posts.forEach(p => { %>
       <% var formatedDate = new Date(p.date).toLocaleString("en-US",{year: "numeric", month:"long", day:"numeric"}); %>
 
-        <div class="d-flex flex-column bg-darker text-light rounded-4 p-4 w-100" style="max-width:50em">  
+        <div class="d-flex flex-column bg-darker text-light rounded-4 p-4 w-100" style="max-width:40em">  
         <p class="fw-bold fs-5"><%=p.title %></p>
         <div class="d-flex justify-content-between">
           <p class="fw-light "><%=formatedDate %></p>
